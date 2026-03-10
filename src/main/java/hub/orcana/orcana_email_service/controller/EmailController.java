@@ -1,6 +1,10 @@
 package hub.orcana.orcana_email_service.controller;
 
+import hub.orcana.orcana_email_service.dto.EmailRequest;
 import hub.orcana.orcana_email_service.gateway.EmailGateway;
+import hub.orcana.orcana_email_service.usecase.EnvioEmailUseCase;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +21,15 @@ public class EmailController {
 
     @PostMapping("/simples")
     public String enviarEmailSimples(@RequestBody Map<String, String> emailRequest) {
-        emailGateway.enviarEmailSimples(
-                emailRequest.get("destinatario"),
-                emailRequest.get("assunto"),
-                emailRequest.get("texto")
-        );
-
-        return "E-mail enviado com sucesso";
+        try {
+            emailGateway.enviarEmailSimples(
+                    emailRequest.get("destinatario"),
+                    emailRequest.get("assunto"),
+                    emailRequest.get("texto")
+            );
+            return ResponseEntity.status(HttpStatus.OK).body("Email enviado com sucesso").toString();
+        } catch (Exception IllegalArgumentException ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: " + IllegalArgumentException.getMessage()).toString();
+        }
     }
 }

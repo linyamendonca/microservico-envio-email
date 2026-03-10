@@ -1,6 +1,7 @@
 package hub.orcana.orcana_email_service.gateway.impl;
 
 import hub.orcana.orcana_email_service.gateway.EmailGateway;
+import hub.orcana.orcana_email_service.usecase.EnvioEmailUseCase;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
