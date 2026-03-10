@@ -1,10 +1,9 @@
 package hub.orcana.orcana_email_service.controller;
 
 import hub.orcana.orcana_email_service.gateway.EmailGateway;
-import hub.orcana.orcana_email_service.gateway.impl.EmailGatewayImpl;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email")

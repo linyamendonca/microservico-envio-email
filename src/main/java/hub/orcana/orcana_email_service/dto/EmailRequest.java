@@ -5,4 +5,5 @@ public record EmailRequest(
         String assunto,
         String mensagem,
         String template
+
 ) {}
