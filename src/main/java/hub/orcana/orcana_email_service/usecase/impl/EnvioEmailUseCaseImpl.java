@@ -1,22 +1,21 @@
 package hub.orcana.orcana_email_service.usecase.impl;
 
 import hub.orcana.orcana_email_service.dto.EmailRequest;
-import hub.orcana.orcana_email_service.dto.EmailTemplateRequest;
 import hub.orcana.orcana_email_service.usecase.EnvioEmailUseCase;
 import hub.orcana.orcana_email_service.usecase.ValidacaoEmailUseCase;
-import hub.orcana.orcana_email_service.gateway.EmailGateway;
-import org.springframework.beans.factory.annotation.Autowired;
+import hub.orcana.orcana_email_service.gateway.EmailProducerGateway;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class EnvioEmailUseCaseImpl implements EnvioEmailUseCase {
 
-    @Autowired
-    private EmailGateway emailGateway;
-
-    @Autowired
-    private ValidacaoEmailUseCase validacaoEmailUseCase;
+    private final EmailProducerGateway emailProducerGateway;
+    private final ValidacaoEmailUseCase validacaoEmailUseCase;
 
     @Override
     public void enviarEmailSimples(EmailRequest emailRequest) {
@@ -31,11 +30,20 @@ public class EnvioEmailUseCaseImpl implements EnvioEmailUseCase {
         if (!validacaoEmailUseCase.verificarBlacklistEmail(emailRequest.destinatario())) {
             throw new IllegalArgumentException("Email está na blacklist");
         }
+
+        log.info("Validações passaram. Publicando email na fila para: {}", emailRequest.destinatario());
+        emailProducerGateway.publicarEmailParaFila(emailRequest);
     }
+
     @Override
     public void enviarEmailEmLote(List<EmailRequest> emailRequests) {
+        log.info("Iniciando envio em lote de {} emails", emailRequests.size());
         for (EmailRequest email : emailRequests) {
-            enviarEmailSimples(email);
+            try {
+                enviarEmailSimples(email);
+            } catch (Exception e) {
+                log.error("Erro ao processar email para: {}", email.destinatario(), e);
+            }
         }
     }
 }
