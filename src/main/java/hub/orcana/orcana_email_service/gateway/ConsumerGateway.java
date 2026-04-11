@@ -24,7 +24,7 @@ public class ConsumerGateway {
             emailGateway.enviarEmailSimples(
                     emailRequest.destinatario(),
                     emailRequest.assunto(),
-                    emailRequest.mensagem()
+                    emailRequest.texto()
             );
 
             log.info("Email enviado com sucesso para: {}", emailRequest.destinatario());

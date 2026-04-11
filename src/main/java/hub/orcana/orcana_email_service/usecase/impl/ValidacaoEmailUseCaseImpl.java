@@ -24,8 +24,8 @@ public class ValidacaoEmailUseCaseImpl implements ValidacaoEmailUseCase {
                 emailRequest.destinatario() != null &&
                 emailRequest.assunto() != null &&
                 !emailRequest.assunto().isEmpty() &&
-                emailRequest.mensagem() != null &&
-                !emailRequest.mensagem().isEmpty();
+                emailRequest.texto() != null &&
+                !emailRequest.texto().isEmpty();
     }
 
     @Override

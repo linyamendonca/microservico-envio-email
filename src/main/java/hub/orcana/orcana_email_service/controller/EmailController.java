@@ -23,7 +23,7 @@ public class EmailController {
             EmailRequest email = new EmailRequest(
                     emailRequest.get("destinatario"),
                     emailRequest.get("assunto"),
-                    emailRequest.get("mensagem"),
+                    emailRequest.get("texto"),
                     null
             );
 
