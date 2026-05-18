@@ -28,8 +28,4 @@ public class ValidacaoEmailUseCaseImpl implements ValidacaoEmailUseCase {
                 !emailRequest.texto().isEmpty();
     }
 
-    @Override
-    public boolean verificarBlacklistEmail(String email) {
-        return !email.contains("spam.com");
-    }
 }

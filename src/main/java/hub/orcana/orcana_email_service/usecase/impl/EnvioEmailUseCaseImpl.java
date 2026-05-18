@@ -26,6 +26,7 @@ public class EnvioEmailUseCaseImpl implements EnvioEmailUseCase {
         if (!validacaoEmailUseCase.validarConteudoEmail(emailRequest)) {
             throw new IllegalArgumentException("Conteúdo do email inválido");
         }
+<<<<<<< HEAD
 
         if (!validacaoEmailUseCase.verificarBlacklistEmail(emailRequest.destinatario())) {
             throw new IllegalArgumentException("Email está na blacklist");
@@ -33,6 +34,8 @@ public class EnvioEmailUseCaseImpl implements EnvioEmailUseCase {
 
         log.info("Validações passaram. Publicando email na fila para: {}", emailRequest.destinatario());
         emailProducerGateway.publicarEmailParaFila(emailRequest);
+=======
+>>>>>>> 7c061f4 (subindo teste)
     }
 
     @Override
